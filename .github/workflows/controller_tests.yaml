@@ -14,10 +14,9 @@ jobs:
         with:
           version: "v0.9.0"
           config: "./.github/kind/cluster.yaml"
+          wait: "300s"
       - name: Testing
         run: |
           kubectl cluster-info
           kubectl get pods -n kube-system
           kubectl get nodes
-          echo "current-context:" $(kubectl config current-context)
-          echo "environment-kubeconfig:" ${KUBECONFIG}
