@@ -25,5 +25,6 @@ jobs:
           echo "All pods ready"
       - name: Deploy AdaptDL
         run: |
+          sudo apt-get install -y python3-setuptools
           python3 -m pip install -r cli/requirements.txt
           make deploy
