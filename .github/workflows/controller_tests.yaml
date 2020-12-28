@@ -19,4 +19,6 @@ jobs:
         run: |
           kubectl cluster-info
           kubectl get pods -n kube-system
+          kubectl wait node --all --timeout=300s --for condition=ready
           kubectl get nodes
+          echo "All nodes ready"
