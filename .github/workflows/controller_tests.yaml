@@ -30,3 +30,4 @@ jobs:
           python3 -m pip install -r cli/requirements.txt
           helm repo add stable https://charts.helm.sh/stable
           make deploy
+          kubectl get pods --all --all-namespaces | grep "adaptdl"
