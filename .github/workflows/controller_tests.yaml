@@ -6,7 +6,7 @@ on:
     branches: [ master ]
 
 jobs:
-  kind:
+  controller tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,10 +15,13 @@ jobs:
           version: "v0.9.0"
           config: "./.github/kind/cluster.yaml"
           wait: "300s"
-      - name: Testing
+      - name: Block for cluster deployment
         run: |
           kubectl cluster-info
-          kubectl get pods -n kube-system
           kubectl wait node --all --timeout=300s --for condition=ready
           kubectl get nodes
+          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
           echo "All nodes ready"
+      - name: Deploy AdaptDL
+        run: |
+          make deploy
