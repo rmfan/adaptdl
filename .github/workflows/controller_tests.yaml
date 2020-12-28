@@ -6,7 +6,7 @@ on:
     branches: [ master ]
 
 jobs:
-  controller tests:
+  controller_tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +20,9 @@ jobs:
           kubectl cluster-info
           kubectl wait node --all --timeout=300s --for condition=ready
           kubectl get nodes
-          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
           echo "All nodes ready"
+          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
+          echo "All pods ready"
       - name: Deploy AdaptDL
         run: |
           make deploy
