@@ -33,8 +33,8 @@ jobs:
           kubectl get pods --all-namespaces | grep "adaptdl"
       - name: Deploy LitmusChaos
         run: |
-          kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.11.0.yaml
           helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
+          kubectl create ns litmus
           helm install chaos litmuschaos/litmus --namespace=litmus
           kubectl get pods -n litmus
           kubectl get crds | grep chaos
