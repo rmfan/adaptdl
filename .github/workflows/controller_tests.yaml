@@ -31,22 +31,11 @@ jobs:
           helm repo add stable https://charts.helm.sh/stable
           make deploy
           kubectl get pods --all-namespaces | grep "adaptdl"
-      - name: Running Litmus pod delete chaos experiment
-        uses: mayadata-io/github-chaos-actions@v0.3.0
-        env:
-          ##If litmus is not installed
-          INSTALL_LITMUS: true
-          ##Give application info under chaos
-          APP_NS: default
-          APP_LABEL: run=nginx
-          APP_KIND: deployment
-          EXPERIMENT_NAME: pod-delete
-          ##Custom image can also been used
-          EXPERIMENT_IMAGE: litmuschaos/go-runner
-          EXPERIMENT_IMAGE_TAG: latest
-          IMAGE_PULL_POLICY: Always           
-          TOTAL_CHAOS_DURATION: 30
-          CHAOS_INTERVAL: 10
-          FORCE: false
-          ##Select true if you want to uninstall litmus after chaos
-          LITMUS_CLEANUP: true
+      - name: Deploy LitmusChaos
+        run: |
+          kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.11.0.yaml
+          helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
+          kubectl create ns litmus
+          helm install chaos litmuschaos/litmus --namespace=litmus
+          kubectl get pods -n litmus
+          kubectl get crds | grep chaos
