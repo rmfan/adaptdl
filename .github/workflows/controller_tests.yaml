@@ -44,5 +44,6 @@ jobs:
         run: |
           kubectl create -f .github/litmuschaos/delete.yaml
           sleep 1
+          kubectl wait pod adaptdl-runner --timeout=200s --for condition=ready
           kubectl wait pod adaptdl-runner --timeout=200s --for delete
           [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]] || kubectl get events --sort-by=.metadata.creationTimestamp | grep chaosresult
