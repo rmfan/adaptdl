@@ -42,8 +42,9 @@ jobs:
           kubectl create -f .github/litmuschaos/rbac.yaml
       - name: Run Tests
         run: |
+          kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml -n nginx
           kubectl create -f .github/litmuschaos/delete.yaml
-          sleep 60
+          sleep 1
           kubectl get all -n default
           kubectl get all -n litmus
           kubectl get pods
