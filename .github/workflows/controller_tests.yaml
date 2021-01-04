@@ -52,4 +52,4 @@ jobs:
           kubectl wait pod adaptdl-runner --timeout=200s --for delete
           kubectl describe chaosresults
           kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}'
-          [[$(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]] 
+          [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]] 
