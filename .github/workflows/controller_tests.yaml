@@ -44,7 +44,7 @@ jobs:
         run: |
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
           kubectl create -f .github/litmuschaos/delete.yaml
-          sleep 1
+          sleep 5
           kubectl get all -n default
           kubectl get all -n litmus
           kubectl get pods
