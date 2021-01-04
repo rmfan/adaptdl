@@ -16,7 +16,7 @@ spec:
   chaosServiceAccount: pod-delete-sa
   monitoring: false
   # It can be delete/retain
-  jobCleanUpPolicy: 'retain'
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: pod-delete
       spec:
