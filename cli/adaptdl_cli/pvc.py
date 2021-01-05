@@ -17,6 +17,7 @@ import re
 
 SUPPORTED_PROVISIONERS = (r'microk8s.io/hostpath',
                           r'.*cephfs.csi.ceph.com',
+                          r'kubernetes.io/no-provisioner',
                           r'\befs\b')
 
 
@@ -31,7 +32,8 @@ def get_storageclass(name=None):
             if re.search(provisioner, sc.provisioner):
                 return sc
     raise SystemExit("Unsupported storageclass from available storageclasses "
-                     f"{[sc.metadata.name for sc in sc_list.items]}")
+                     f"{[sc.metadata.name for sc in sc_list.items]}"
+                     f" not found in {SUPPORTED_PROVISIONERS}")
 
 
 def create_pvc(name=None, storage_class=None, size="100Gi",

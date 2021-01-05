@@ -28,6 +28,7 @@ jobs:
           sudo apt-get install -y python3-setuptools
           python3 -m pip install wheel
           python3 -m pip install -r cli/requirements.txt
+          python3 -m pip install -e cli
           helm repo add stable https://charts.helm.sh/stable
           make deploy
           kubectl get pods --all-namespaces | grep "adaptdl"
@@ -43,6 +44,7 @@ jobs:
       - name: Run Tests
         run: |
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
+          for i in {0..9}; do bash tests/short-workload/linear-regression.sh; done
           kubectl create -f .github/litmuschaos/delete.yaml
           sleep 10
           kubectl get all -n default
@@ -50,6 +52,6 @@ jobs:
           kubectl get pods
           kubectl wait pod adaptdl-runner --timeout=400s --for condition=ready
           kubectl wait pod adaptdl-runner --timeout=200s --for delete
-          kubectl describe chaosresults
           kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}'
-          [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]] 
+          [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
+          kubectl get adaptdljobs
