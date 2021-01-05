@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt-get install -y python3-setuptools
           python3 -m pip install wheel
-          python3 -m pip install -e ./cli
+          python3 -m pip install adaptdl-cli
           helm repo add stable https://charts.helm.sh/stable
           make deploy
           kubectl create -f .github/kind/local-storageclass.yaml
