@@ -44,7 +44,7 @@ jobs:
       - name: Run Tests
         run: |
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
-          python3 -m pip install adaptdl-cli==0.2.0
+          python3 -m pip install adaptdl-cli==0.2.3
           for i in {0..9}; do sh tests/short-workload/linear-regression.sh; done
           kubectl create -f .github/litmuschaos/delete.yaml
           sleep 10
