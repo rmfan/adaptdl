@@ -10,7 +10,7 @@ spec:
         image: python:3.7-slim
         command:
         - python3
-        - /root/examples/linear_regression/main.py
+        - /source/examples/linear_regression/main.py
         - --epochs=5
         env:
         - name: PYTHONUNBUFFERED
@@ -27,7 +27,12 @@ spec:
         - mountPath:  /adaptdl/share
           name:        adaptdl-pvc
           subPath:    adaptdl/share
+        - mountPath: /source
+          name:        adaptdl-source
       volumes:
       - name: adaptdl-pvc
         persistentVolumeClaim:
           claimName: adaptdl-pvc-local
+      - name: adaptdl-source
+        hostPath:
+          .
