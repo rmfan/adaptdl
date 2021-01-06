@@ -32,4 +32,3 @@ spec:
       - name: adaptdl-pvc
         persistentVolumeClaim:
           claimName: adaptdl-pvc-local
-EOF
