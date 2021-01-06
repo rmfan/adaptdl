@@ -31,6 +31,7 @@ jobs:
           helm repo add stable https://charts.helm.sh/stable
           make deploy
           kubectl create -f .github/kind/local-storageclass.yaml
+          kubectl create -f .github/kind/pvc.yaml
           kubectl get pods --all-namespaces | grep "adaptdl"
       - name: Deploy LitmusChaos
         run: |
