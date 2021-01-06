@@ -21,8 +21,6 @@ spec:
           requests:
             cpu: 100m
         volumeMounts:
-        - mountPath:  /adaptdl/tensorboard
-          name:        adaptdl-tensorboard
         - mountPath:  /adaptdl/checkpoint
           name:        adaptdl-pvc
           subPath:    adaptdl/checkpoint
