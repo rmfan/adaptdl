@@ -1,0 +1,35 @@
+apiVersion: adaptdl.petuum.com/v1
+kind: AdaptDLJob
+metadata:
+  generateName: linear-regression-
+spec:
+  template:
+    spec:
+      containers:
+      - name: main
+        command:
+        - python3
+        - /root/examples/linear_regression/main.py
+        - --epochs=5
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "true"
+        resources:
+          limits:
+            cpu: 100m
+          requests:
+            cpu: 100m
+        volumeMounts:
+        - mountPath:  /adaptdl/tensorboard
+          name:        adaptdl-tensorboard
+        - mountPath:  /adaptdl/checkpoint
+          name:        adaptdl-pvc
+          subPath:    adaptdl/checkpoint
+        - mountPath:  /adaptdl/share
+          name:        adaptdl-pvc
+          subPath:    adaptdl/share
+      volumes:
+      - name: adaptdl-pvc
+        persistentVolumeClaim:
+          claimName: adaptdl-pvc-local
+EOF
