@@ -7,6 +7,7 @@ spec:
     spec:
       containers:
       - name: main
+        image: python:3.7-slim
         command:
         - python3
         - /root/examples/linear_regression/main.py
