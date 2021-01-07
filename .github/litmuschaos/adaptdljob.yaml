@@ -9,9 +9,9 @@ spec:
       - name: main
         image: python:3.7-slim
         command:
-        - python3
-        - /source/examples/linear_regression/main.py
-        - --epochs=5
+          - python3
+          - /source/examples/linear_regression/main.py
+          - --epochs=5
         env:
         - name: PYTHONUNBUFFERED
           value: "true"
@@ -35,4 +35,4 @@ spec:
           claimName: adaptdl-pvc-local
       - name: adaptdl-source
         hostPath:
-          .
+          path: "/source"
