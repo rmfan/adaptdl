@@ -9,12 +9,9 @@ spec:
       - name: main
         image: python:3.7-slim
         command:
-          - bash
-          - -c
-          - "ls /source && ls /source/examples && ls /source/examples/linear_regression && ls /source/examples/linear_regression/main.py"
-            #          - python3
-            #          - /source/examples/linear_regression/main.py
-            #          - --epochs=5
+          - python3
+          - /source/examples/linear_regression/main.py
+          - --epochs=5
         env:
         - name: PYTHONUNBUFFERED
           value: "true"
