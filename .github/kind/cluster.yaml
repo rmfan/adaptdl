@@ -4,13 +4,13 @@ nodes:
 - role: control-plane
 - role: worker
   extraMounts:
-  - hostPath: /home/runner/work/adaptdl/adaptdl
+  - hostPath: /home/runner/work/adaptdl
     containerPath: /source
 - role: worker
   extraMounts:
-  - hostPath: /home/runner/work/adaptdl/adaptdl
+  - hostPath: /home/runner/work/adaptdl
     containerPath: /source
 - role: worker
   extraMounts:
-  - hostPath: /home/runner/work/adaptdl/adaptdl
+  - hostPath: /home/runner/work/adaptdl
     containerPath: /source
