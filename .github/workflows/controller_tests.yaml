@@ -57,3 +57,4 @@ jobs:
           kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}'
           [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
           kubectl get adaptdljobs
+          kubectl logs $(kubectl get pods -o name | grep linear | head -n 1)
