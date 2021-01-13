@@ -11,7 +11,7 @@ spec:
         command:
           - python3
           - /source/examples/linear_regression/main.py
-          - --epochs=5
+          - --epochs=1
         env:
         - name: PYTHONUNBUFFERED
           value: "true"
