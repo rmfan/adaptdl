@@ -33,6 +33,8 @@ jobs:
           kubectl create -f .github/kind/local-storageclass.yaml
           kubectl create -f .github/kind/pvc.yaml
           kubectl get pods --all-namespaces | grep "adaptdl"
+          docker build -f examples/Dockerfile . -t localhost:59283/adaptdl-example:latest
+          docker push localhost:59283/adaptdl-example:latest
       - name: Deploy LitmusChaos
         run: |
           helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/

@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: main
-        image: python:3.7-slim
+        image: localhost:59283/adaptdl-example:latest
         command:
           - python3
           - /source/examples/linear_regression/main.py
@@ -15,6 +15,8 @@ spec:
         env:
         - name: PYTHONUNBUFFERED
           value: "true"
+        - name: PYTHONPATH
+          value: /source/adaptdl/adaptdl
         resources:
           limits:
             cpu: 100m
