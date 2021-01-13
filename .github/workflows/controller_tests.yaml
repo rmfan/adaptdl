@@ -38,7 +38,6 @@ jobs:
               adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
       - name: Deploy LitmusChaos
         run: |
-          kubectl describe deployment adaptdl-adaptdl-sched
           helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
           kubectl create ns litmus
           helm install chaos litmuschaos/litmus --namespace=litmus
@@ -53,8 +52,7 @@ jobs:
           for i in {0..9}; do kubectl create -f .github/litmuschaos/adaptdljob.yaml; done
           kubectl create -f .github/litmuschaos/delete.yaml
           sleep 10
-          kubectl get all -n default
-          kubectl get all -n litmus
+          kubectl describe chaosengine adaptdl
           kubectl get pods
           kubectl wait pod adaptdl-runner --timeout=400s --for condition=ready
           kubectl wait pod adaptdl-runner --timeout=200s --for delete
