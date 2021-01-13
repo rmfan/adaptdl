@@ -51,7 +51,7 @@ jobs:
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
           for i in {0..9}; do kubectl create -f .github/litmuschaos/adaptdljob.yaml; done
           kubectl create -f .github/litmuschaos/delete.yaml
-          sleep 10
+          sleep 60
           kubectl describe chaosengine adaptdl
           kubectl get pods
           kubectl wait pod adaptdl-runner --timeout=400s --for condition=ready
