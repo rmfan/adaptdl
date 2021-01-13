@@ -61,6 +61,3 @@ jobs:
           kubectl describe chaosresults.litmuschaos.io
           kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}'
           [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
-          kubectl get adaptdljobs
-          kubectl get pods
-          kubectl logs $(kubectl get pods -o name | grep linear | head -n 1)

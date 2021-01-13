@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  generateName: linear-regression-
+  generateName: controller-runner-
 spec:
   restartPolicy: Never
   containers:
