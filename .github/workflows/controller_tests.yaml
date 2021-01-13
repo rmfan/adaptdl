@@ -36,7 +36,7 @@ jobs:
           docker build -f examples/Dockerfile . -t localhost:59283/adaptdl-example:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
-          docker build -f .github/listmuschaos/Dockerfile . -t localhost:59283/controller:latest
+          docker build -f .github/litmuschaos/Dockerfile . -t localhost:59283/controller:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/controller:latest
       - name: Deploy LitmusChaos
