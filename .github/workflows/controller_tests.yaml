@@ -36,6 +36,9 @@ jobs:
           docker build -f examples/Dockerfile . -t localhost:59283/adaptdl-example:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
+          docker build -f .github/listmuschaos/Dockerfile . -t localhost:59283/controller:latest
+          python3 cli/adaptdl_cli/proxy.py -p 59283 default \
+              adaptdl-registry:registry docker push localhost:59283/controller:latest
       - name: Deploy LitmusChaos
         run: |
           helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
@@ -48,14 +51,13 @@ jobs:
       - name: Run Tests
         run: |
           pwd
-          kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
-          for i in {0..9}; do kubectl create -f .github/litmuschaos/adaptdljob.yaml; done
-          kubectl create -f .github/litmuschaos/delete.yaml
-          sleep 60
-          kubectl describe chaosengine adaptdl
+          #kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
+          kubectl create -f .github/litmuschaos/controller_pod.yaml
+          sleep 600
           kubectl get pods
-          kubectl wait pod adaptdl-runner --timeout=400s --for condition=ready
-          kubectl wait pod adaptdl-runner --timeout=200s --for delete
+          kubectl get chaosresults.litmuschaos.io
+          #          kubectl wait pod adaptdl-runner --timeout=400s --for condition=ready
+          #          kubectl wait pod adaptdl-runner --timeout=200s --for delete
           kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}'
           [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
           kubectl get adaptdljobs

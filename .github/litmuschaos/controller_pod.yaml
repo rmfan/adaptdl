@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  generateName: linear-regression-
+spec:
+  restartPolicy: Never
+  containers:
+  - name: main
+    image: localhost:32000/controller:latest
+    command:
+    - bash
+    - -c
+    - "python3 /source/.github/litmuschaos/controller.py --job-path /source/.github/litmuschaos/adaptdljob.yaml --image-error-rate=1.0"
+    env:
+    - name: PYTHONUNBUFFERED
+      value: "true"
+    resources:
+      limits:
+        cpu: 100m
+      requests:
+        cpu: 100m
+    volumeMounts:
+    - mountPath:  /adaptdl/checkpoint
+      name:        adaptdl-pvc
+      subPath:    adaptdl/checkpoint
+    - mountPath:  /adaptdl/share
+      name:        adaptdl-pvc
+      subPath:    adaptdl/share
+    - mountPath: /source
+      name:        adaptdl-source
+  volumes:
+  - name: adaptdl-pvc
+    persistentVolumeClaim:
+      claimName: adaptdl-pvc-local
+  - name: adaptdl-source
+    hostPath:
+      path: "/source"
+  serviceAccountName:
+    litmus-sa
