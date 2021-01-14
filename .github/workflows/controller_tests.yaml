@@ -33,7 +33,7 @@ jobs:
           kubectl create -f .github/kind/local-storageclass.yaml
           kubectl create -f .github/kind/pvc.yaml
           kubectl get pods --all-namespaces | grep "adaptdl"
-          docker build -f examples/Dockerfile . -t localhost:59283/adaptdl-example:latest
+          docker build -f examples/linear_regression/Dockerfile . -t localhost:59283/adaptdl-example:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
           docker build -f .github/litmuschaos/Dockerfile . -t localhost:59283/controller:latest
@@ -59,8 +59,7 @@ jobs:
           kubectl describe chaosengines.litmuschaos.io
           kubectl logs $(kubectl get pods -o name | grep adaptdl-experiment | head -n 1)
           kubectl wait pod adaptdl-chaos-runner --timeout=400s --for condition=ready
-          kubectl wait pod adaptdl-chaos-runner --timeout=600s --for delete || kubectl get pods
-          kubectl logs $(kubectl get pods -o name | grep adaptdl-experiment | head -n 1)
+          kubectl wait pod adaptdl-chaos-runner --timeout=600s --for delete
           kubectl get pods
           kubectl get chaosresults.litmuschaos.io
           kubectl describe chaosresults.litmuschaos.io
