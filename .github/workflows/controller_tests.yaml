@@ -56,6 +56,8 @@ jobs:
           kubectl create -f .github/litmuschaos/engine.yaml
           sleep 5
           kubectl get pods
+          kubectl describe chaosengines.litmuschaos.io
+          kubectl logs -n litmus $(kubectl get pods -n litmus -o name)
           kubectl wait pod adaptdl-chaos-runner --timeout=400s --for condition=ready
           kubectl wait pod adaptdl-chaos-runner --timeout=600s --for delete
           kubectl get pods
