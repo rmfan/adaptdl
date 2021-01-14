@@ -10,7 +10,7 @@ spec:
     command:
     - bash
     - -c
-    - "python3 /source/.github/litmuschaos/controller.py --job-path /source/.github/litmuschaos/adaptdljob.yaml --image-error-rate=1.0"
+    - "python3 /source/.github/litmuschaos/controller.py --job-path /source/.github/litmuschaos/adaptdljob.yaml --image-error-rate=0.1"
     env:
     - name: PYTHONUNBUFFERED
       value: "true"
