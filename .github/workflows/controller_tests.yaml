@@ -56,8 +56,6 @@ jobs:
           sleep 600
           kubectl get pods
           kubectl get chaosresults.litmuschaos.io
-          #          kubectl wait pod adaptdl-runner --timeout=400s --for condition=ready
-          #          kubectl wait pod adaptdl-runner --timeout=200s --for delete
           kubectl describe chaosresults.litmuschaos.io
-          kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}'
-          [[ $(kubectl get chaosresults -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
+          kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}'
+          #[[ $(kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
