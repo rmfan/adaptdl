@@ -47,7 +47,7 @@ spec:
     image: "localhost:32000/controller:latest"
     args:
     - -c
-    - "python3 /source/.github/litmuschaos/controller.py --job-path /source/.github/litmuschaos/adaptdljob.yaml --image-error-rate=1.0"
+    - "python3 /source/.github/litmuschaos/controller.py --job-path /source/.github/litmuschaos/adaptdljob.yaml --image-error-rate=$IMAGE_ERROR_RATE"
     command:
     - /bin/bash
     labels:
@@ -58,3 +58,5 @@ spec:
       value: "true"
     - name: PYTHONPATH
       value: /source/adaptdl/adaptdl
+    - name: IMAGE_ERROR_RATE
+      value: 0.1

@@ -26,3 +26,5 @@ spec:
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
               value: 'false'
+            - name: IMAGE_ERROR_RATE
+              value: 1.0
