@@ -17,7 +17,6 @@ jobs:
           wait: "300s"
       - name: Block for cluster deployment
         run: |
-          kubectl cluster-info
           kubectl wait node --all --timeout=300s --for condition=ready
           kubectl get nodes
           echo "All nodes ready"
@@ -32,7 +31,9 @@ jobs:
           make deploy
           kubectl create -f .github/kind/local-storageclass.yaml
           kubectl create -f .github/kind/pvc.yaml
+          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
           kubectl get pods --all-namespaces | grep "adaptdl"
+      - name: Create and Host Test Images
           docker build -f examples/linear_regression/Dockerfile . -t localhost:59283/adaptdl-example:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
@@ -48,20 +49,15 @@ jobs:
           kubectl get crds | grep chaos
           kubectl annotate deploy/adaptdl-adaptdl-sched litmuschaos.io/chaos="true"
           kubectl create -f .github/litmuschaos/rbac.yaml
+          kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
       - name: Run Tests
         run: |
-          pwd
-          #kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
           kubectl create -f .github/litmuschaos/adaptdlexperiment.yaml
           kubectl create -f .github/litmuschaos/engine.yaml
-          sleep 30
-          kubectl get pods
-          kubectl describe chaosengines.litmuschaos.io
-          kubectl logs $(kubectl get pods -o name | grep adaptdl-experiment | head -n 1)
+          sleep 10
           kubectl wait pod adaptdl-chaos-runner --timeout=400s --for condition=ready
           kubectl wait pod adaptdl-chaos-runner --timeout=600s --for delete
-          kubectl get pods
           kubectl get chaosresults.litmuschaos.io
           kubectl describe chaosresults.litmuschaos.io
-          kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}'
-          #[[ $(kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
+          kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}' || kubectl get pods
+          [[ $(kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}') == Pass ]]
