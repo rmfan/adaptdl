@@ -34,6 +34,7 @@ jobs:
           kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
           kubectl get pods --all-namespaces | grep "adaptdl"
       - name: Create and Host Test Images
+        run: |
           docker build -f examples/linear_regression/Dockerfile . -t localhost:59283/adaptdl-example:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
