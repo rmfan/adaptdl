@@ -1,0 +1,60 @@
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosExperiment
+metadata:
+  name: adaptdl-experiment
+  labels:
+    instance: litmus
+    litmuschaos.io/version: 1.11.0
+spec:
+  definition:
+    scope: Namespaced
+    permissions:
+      - apiGroups:
+          - ""
+          - "apps"
+          - "apps.openshift.io"
+          - "argoproj.io"
+          - "batch"
+          - "litmuschaos.io"
+          - "adaptdl.petuum.com"
+        resources:
+          - "deployments"
+          - "jobs"
+          - "pods"
+          - "pods/log"
+          - "replicationcontrollers"
+          - "deployments"
+          - "statefulsets"
+          - "daemonsets"
+          - "replicasets"
+          - "deploymentconfigs"
+          - "rollouts"
+          - "pods/exec"
+          - "events"
+          - "chaosengines"
+          - "chaosexperiments"
+          - "chaosresults"
+          - "adaptdljobs"
+          - "adaptdljobs/status"
+        verbs:
+          - "create"
+          - "list"
+          - "get"
+          - "patch"
+          - "update"
+          - "delete"
+          - "deletecollection"
+    image: "localhost:32000/controller:latest"
+    args:
+    - -c
+    - "python3 /source/.github/litmuschaos/controller.py --job-path /source/.github/litmuschaos/adaptdljob.yaml --image-error-rate=1.0"
+    command:
+    - /bin/bash
+    labels:
+      name: adaptdl-experiment
+      app.kubernetes.io/part-of: litmus
+    env:
+    - name: PYTHONUNBUFFERED
+      value: "true"
+    - name: PYTHONPATH
+      value: /source/adaptdl/adaptdl
