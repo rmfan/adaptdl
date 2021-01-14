@@ -58,7 +58,3 @@ spec:
       value: "true"
     - name: PYTHONPATH
       value: /source/adaptdl/adaptdl
-    volumes:
-    - name: adaptdl-pvc
-      persistentVolumeClaim:
-        claimName: adaptdl-pvc-local
