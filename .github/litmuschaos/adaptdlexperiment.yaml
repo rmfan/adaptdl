@@ -59,4 +59,4 @@ spec:
     - name: PYTHONPATH
       value: /source/adaptdl/adaptdl
     - name: IMAGE_ERROR_RATE
-      value: 0.1
+      value: "0.1"
