@@ -79,8 +79,8 @@ result_template = {
 
 def create_result(passed):
     result = copy.deepcopy(result_template)
-    result["spec"]["experimentstatus"]["phase"] = "Completed"
-    result["spec"]["experimentstatus"]["verdict"] = \
+    result["status"]["experimentstatus"]["phase"] = "Completed"
+    result["status"]["experimentstatus"]["verdict"] = \
         "Pass" if passed else "Fail"
     custom_api.create_namespaced_custom_object(
         "litmuschaos.io", "v1alpha1", NAMESPACE,
