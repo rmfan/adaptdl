@@ -67,7 +67,7 @@ result_template = {
     "metadata": {
         "name": os.environ["HOSTNAME"]
     },
-    "spec": {
+    "status": {
         "experimentstatus": {
             "phase": None,
             "verdict": None
