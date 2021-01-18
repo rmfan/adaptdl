@@ -15,13 +15,6 @@ jobs:
           version: "v0.9.0"
           config: "./.github/kind/cluster.yaml"
           wait: "300s"
-      - name: Block for cluster deployment
-        run: |
-          kubectl wait node --all --timeout=300s --for condition=ready
-          kubectl get nodes
-          echo "All nodes ready"
-          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
-          echo "All pods ready"
       - name: Deploy AdaptDL
         run: |
           sudo apt-get install -y python3-setuptools
@@ -50,16 +43,20 @@ jobs:
           kubectl annotate deploy/adaptdl-adaptdl-sched litmuschaos.io/chaos="true"
           kubectl create -f .github/litmuschaos/rbac.yaml
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
+      - name: Block for cluster deployment
+        run: |
+          kubectl wait node --all --timeout=300s --for condition=ready
+          kubectl get nodes
+          echo "All nodes ready"
+          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
+          echo "All pods ready"
+          kubectl get pods --all-namespaces | grep "adaptdl"
       - name: Run Tests
         run: |
-          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
-          kubectl get pods --all-namespaces | grep "adaptdl"
-
           # Expand tests by adding new experiments and/or engines
           kubectl create -f .github/litmuschaos/adaptdlexperiment.yaml
           kubectl create -f .github/litmuschaos/engine.yaml
           sleep 10
-          kubectl describe chaosengines.litmuschaos.io
           kubectl wait pod adaptdl-chaos-runner --timeout=400s --for condition=ready
           kubectl describe pods
           kubectl wait pod adaptdl-chaos-runner --timeout=600s --for delete
