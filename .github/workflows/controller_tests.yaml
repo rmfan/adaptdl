@@ -58,13 +58,11 @@ jobs:
           kubectl create -f .github/litmuschaos/engine.yaml
           kubectl get pods
           sleep 30
-          kubectl describe pods
-          kubectl get pods -l app.kubernetes.io/part-of=litmus
-          kubectl wait pod -l app.kubernetes.io/part-of=litmus --timeout=600s --for ready
+          kubectl get pods -l name=adaptdl-experiment
+          kubectl wait pod -l name=adaptdl-experiment --timeout=600s --for ready
           kubectl get pods
-          kubectl get pods -l app.kubernetes.io/part-of=litmus
-          kubectl wait pod -l app.kubernetes.io/part-of=litmus --timeout=600s --for delete
-          kubectl get pods -l app.kubernetes.io/part-of=litmus
+          kubectl wait pod -l name=adaptdl-experiment --timeout=600s --for delete
+          kubectl get pods -l name=adaptdl-experiment
           kubectl get chaosresults.litmuschaos.io
           kubectl describe chaosresults.litmuschaos.io
           kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}' || kubectl get pods
