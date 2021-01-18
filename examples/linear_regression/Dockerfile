@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-FROM python:3.7-slim
-WORKDIR /root
-
 FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 WORKDIR /root
 
@@ -29,6 +25,6 @@ RUN ADAPTDL_VERSION=${ADAPTDL_VERSION} pip install adaptdl/dist/*.whl
 
 RUN rm -rf adaptdl/dist
 
-COPY examples examples
+COPY examples/linear_regression examples/linear_regression
 
 ENV PYTHONUNBUFFERED=true
