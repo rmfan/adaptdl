@@ -31,7 +31,6 @@ jobs:
           make deploy
           kubectl create -f .github/kind/local-storageclass.yaml
           kubectl create -f .github/kind/pvc.yaml
-          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
           kubectl get pods --all-namespaces | grep "adaptdl"
       - name: Create and Host Test Images
         run: |
@@ -53,6 +52,9 @@ jobs:
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
       - name: Run Tests
         run: |
+          kubectl wait pod --all --all-namespaces --timeout=300s --for condition=ready
+          kubectl get pods --all-namespaces | grep "adaptdl"
+
           # Expand tests by adding new experiments and/or engines
           kubectl create -f .github/litmuschaos/adaptdlexperiment.yaml
           kubectl create -f .github/litmuschaos/engine.yaml
