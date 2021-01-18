@@ -53,6 +53,7 @@ jobs:
           kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/experiments.yaml
       - name: Run Tests
         run: |
+          # Expand tests by adding new experiments and/or engines
           kubectl create -f .github/litmuschaos/adaptdlexperiment.yaml
           kubectl create -f .github/litmuschaos/engine.yaml
           sleep 10

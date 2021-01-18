@@ -10,6 +10,7 @@ from yaml import load
 kubernetes.config.load_incluster_config()
 custom_api = kubernetes.client.CustomObjectsApi()
 core_api = kubernetes.client.CoreV1Api()
+apps_api = kubernetes.client.AppsV1Api()
 NAMESPACE = "default"
 
 parser = argparse.ArgumentParser(description='AdaptDLJob chaos controller')
@@ -58,7 +59,13 @@ def verify_correctness(adaptdljobs, timeout=120):
             del adaptdljobs[index]
         sleep(1)
         t += 1
-    return (t < timeout)
+
+    sched_status = apps_api.read_namespaced_deployment_status(
+        "adaptdl-adaptdl-sched", NAMESPACE)
+    sched_ready = (sched_status.status.ready_replicas is not None and
+                   sched_status.status.ready_replicas > 0)
+
+    return (t < timeout) and sched_ready
 
 
 result_template = {
@@ -95,6 +102,7 @@ def delete_jobs(names):
 
 
 def run_test(test_config):
+    # Expand tests by creating/modifying/deleting k8s objects in this loop
     adaptdljobs = []
     for i in range(test_config["duration"]):
         if i % test_config["interval"] == 0:

@@ -22,7 +22,7 @@ rules:
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
 - apiGroups: ["apps"]
-  resources: ["deployments","statefulsets","daemonsets","replicasets"]
+  resources: ["deployments","deployments/status","statefulsets","daemonsets","replicasets"]
   verbs: ["list","get"]
 - apiGroups: ["apps.openshift.io"]
   resources: ["deploymentconfigs"]
