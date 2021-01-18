@@ -56,10 +56,10 @@ jobs:
           # Expand tests by adding new experiments and/or engines
           kubectl create -f .github/litmuschaos/adaptdlexperiment.yaml
           kubectl create -f .github/litmuschaos/engine.yaml
-          sleep 10
+          sleep 30
           kubectl wait pod adaptdl-chaos-runner --timeout=400s --for condition=ready
-          kubectl describe pods
           kubectl wait pod adaptdl-chaos-runner --timeout=600s --for delete
+          kubectl get pods
           kubectl get chaosresults.litmuschaos.io
           kubectl describe chaosresults.litmuschaos.io
           kubectl get chaosresults.litmuschaos.io -o jsonpath='{.items[*].status.experimentstatus.verdict}' || kubectl get pods
