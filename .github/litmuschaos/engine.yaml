@@ -27,4 +27,4 @@ spec:
             - name: FORCE
               value: 'false'
             - name: IMAGE_ERROR_RATE
-              value: "0.1"
+              value: "0.5"
