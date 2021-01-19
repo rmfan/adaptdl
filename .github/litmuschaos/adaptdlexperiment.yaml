@@ -61,4 +61,4 @@ spec:
     - name: IMAGE_ERROR_RATE
       value: "0.1"
     - name: JOBS_PER_CYCLE
-      value: "5"
+      value: "1"
