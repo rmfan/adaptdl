@@ -61,10 +61,13 @@ jobs:
           kubectl get pods -l name=adaptdl-experiment
           sleep 100
           kubectl get pods
+          kubectl logs -l name=adaptdl-experiment
           sleep 100
           kubectl get pods
+          kubectl logs -l name=adaptdl-experiment
           sleep 100
           kubectl get pods
+          kubectl logs -l name=adaptdl-experiment
           kubectl wait pod -l name=adaptdl-experiment --timeout=600s --for=condition=delete
 
           kubectl get pods -l name=adaptdl-experiment
