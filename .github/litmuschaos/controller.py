@@ -15,7 +15,7 @@ NAMESPACE = "default"
 
 parser = argparse.ArgumentParser(description='AdaptDLJob chaos controller')
 parser.add_argument('--jobs-per-cycle', type=int, default=10)
-parser.add_argument('--cycle-interval', type=int, default=10)
+parser.add_argument('--cycle-interval', type=int, default=20)
 parser.add_argument('--duration', type=int, default=60)
 parser.add_argument('--image-error-rate', type=float, default=0.1)
 parser.add_argument('--name-error-rate', type=float, default=0.1)
