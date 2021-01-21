@@ -43,7 +43,7 @@ b_target = torch.randn(1) * 5
 
 
 parser = argparse.ArgumentParser(description='Linear Regression Training')
-parser.add_argument('--bs', default=128, type=int, help='batch size')
+parser.add_argument('--bs', default=4, type=int, help='batch size')
 parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
 parser.add_argument('--epochs', default=90, type=int, help='number of epochs')
 parser.add_argument('--autoscale-bsz', dest='autoscale_bsz', default=False, action='store_true', help='autoscale batchsize')
@@ -81,7 +81,7 @@ if device == 'cuda':
 
 if args.autoscale_bsz:
     max_batch_size = 8* args.bs
-    local_bsz_bounds = (32,1024)
+    local_bsz_bounds = (1,16)
 else:
     max_batch_size = None
     local_bsz_bounds = None
