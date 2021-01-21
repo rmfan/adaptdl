@@ -110,7 +110,7 @@ class SimpleDataset(Dataset):
     def __len__(self):
         return len(self.data)
 
-dataset = SimpleDataset(10000)
+dataset = SimpleDataset(100)
 dataloader = adl.AdaptiveDataLoader(dataset, batch_size=args.bs, shuffle=True, num_workers=2, drop_last=True)
 
 optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=0.9,

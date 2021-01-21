@@ -20,9 +20,9 @@ spec:
           value: /source/adaptdl/adaptdl
         resources:
           limits:
-            cpu: 100m
+            cpu: 500m
           requests:
-            cpu: 100m
+            cpu: 500m
         volumeMounts:
         - mountPath:  /adaptdl/checkpoint
           name:        adaptdl-pvc
