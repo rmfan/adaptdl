@@ -27,9 +27,9 @@ jobs:
           kubectl get pods --all-namespaces | grep "adaptdl"
       - name: Create and Host Test Images
         run: |
-          docker build -f examples/linear_regression/Dockerfile . -t localhost:59283/adaptdl-example:latest
-          python3 cli/adaptdl_cli/proxy.py -p 59283 default \
-              adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
+          #docker build -f examples/linear_regression/Dockerfile . -t localhost:59283/adaptdl-example:latest
+          #python3 cli/adaptdl_cli/proxy.py -p 59283 default \
+          #     adaptdl-registry:registry docker push localhost:59283/adaptdl-example:latest
           docker build -f .github/litmuschaos/Dockerfile . -t localhost:59283/controller:latest
           python3 cli/adaptdl_cli/proxy.py -p 59283 default \
               adaptdl-registry:registry docker push localhost:59283/controller:latest
@@ -58,16 +58,6 @@ jobs:
           kubectl create -f .github/litmuschaos/engine.yaml
           sleep 10
           kubectl wait pod -l name=adaptdl-experiment --timeout=400s --for=condition=ready
-          kubectl get pods -l name=adaptdl-experiment
-          sleep 100
-          kubectl get pods
-          kubectl logs -l name=adaptdl-experiment
-          sleep 100
-          kubectl get pods
-          kubectl logs -l name=adaptdl-experiment
-          sleep 100
-          kubectl get pods
-          kubectl logs -l name=adaptdl-experiment
           kubectl wait pod -l name=adaptdl-experiment --timeout=600s --for=condition=delete
 
           kubectl get pods -l name=adaptdl-experiment
