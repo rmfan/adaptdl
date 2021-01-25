@@ -12,25 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-FROM python:3.7-slim
-WORKDIR /root
-
 FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 WORKDIR /root
 
 # Install apps
 COPY adaptdl adaptdl
-COPY examples/requirements.txt .
 
 RUN cd adaptdl && python3 setup.py bdist_wheel
 
 ARG ADAPTDL_VERSION=0.0.0
 RUN ADAPTDL_VERSION=${ADAPTDL_VERSION} pip install adaptdl/dist/*.whl
-RUN pip install -r requirements.txt
 
 RUN rm -rf adaptdl/dist
 
-COPY examples examples
+COPY examples/linear_regression examples/linear_regression
 
 ENV PYTHONUNBUFFERED=true

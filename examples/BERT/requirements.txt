@@ -10,4 +10,4 @@ numpy>=1.17.2
 statsmodels>=0.10.1
 tensorboard>=2.0.0
 torchvision>=0.7.0
-torchtext>=0.7.0
+torchtext==0.7.0
