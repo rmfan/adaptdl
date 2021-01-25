@@ -7,12 +7,15 @@ spec:
     spec:
       containers:
       - name: main
-        image: localhost:32000/adaptdl-example:latest
+        image: python:3.8.0-slim
+#        image: localhost:32000/adaptdl-example:latest
         command:
           - python3
-          - /source/examples/linear_regression/main.py
-          - --epochs=1
-          - --bs=32
+          - -c
+          - "import time; time.sleep(60)"
+            #          - /source/examples/linear_regression/main.py
+            #          - --epochs=1
+            #          - --bs=32
         env:
         - name: PYTHONUNBUFFERED
           value: "true"
