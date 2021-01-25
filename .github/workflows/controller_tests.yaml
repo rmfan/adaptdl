@@ -73,6 +73,7 @@ jobs:
           kubectl get pods -l name=adaptdl-experiment
           kubectl describe chaosresults.litmuschaos.io
           sleep 400
+          kubectl describe chaosresults.litmuschaos.io
           kubectl get pods -l name=adaptdl-experiment
           kubectl wait pod -l name=adaptdl-experiment --timeout=1200s --for=condition=delete
 
